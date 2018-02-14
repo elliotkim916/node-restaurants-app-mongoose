@@ -27,7 +27,7 @@ app.get('/restaurants', (req, res) => {
     // call the `.serialize` instance method we've created in
     // models.js in order to only expose the data we want the API return.
     .then(restaurants => {
-      res.json({
+       res.json({
         restaurants: restaurants.map(
           (restaurant) => restaurant.serialize())
       });
@@ -101,10 +101,13 @@ app.put('/restaurants/:id', (req, res) => {
       toUpdate[field] = req.body[field];
     }
   });
+// req.body['name'] = 'David'
+// toUpdate['name'] = 'David'
 
+// toUpdate = {name: 'David'}
   Restaurant
     // all key/value pairs in toUpdate will be updated -- that's what `$set` does
-    .findByIdAndUpdate(req.params.id, { $set: toUpdate })
+    .findByIdAndUpdate(req.params.id, { $set: {name: 'David', borough: 'Texas'} })
     .then(restaurant => res.status(204).end())
     .catch(err => res.status(500).json({ message: 'Internal server error' }));
 });
